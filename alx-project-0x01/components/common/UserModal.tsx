@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { UserData, UserModalProps } from "@/interfaces";
+// Make sure UserData is exported from '@/interfaces', or import the correct type name
+import { UserModalProps } from "@/interfaces";
+import type { UserData } from "@/interfaces"; // Use 'type' import if UserData is a type and is exported
 
 const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
   const [user, setUser] = useState<UserData>({
@@ -32,7 +34,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
     if (name.includes(".")) {
       const [parent, child, subChild] = name.split(".");
       if (subChild) {
-        setUser((prev) => ({
+        setUser((prev: UserData) => ({
           ...prev,
           [parent]: {
             ...(prev[parent as keyof UserData] as object),
@@ -43,7 +45,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
           },
         }));
       } else {
-        setUser((prev) => ({
+        setUser((prev: UserData) => ({
           ...prev,
           [parent]: {
             ...(prev[parent as keyof UserData] as object),
@@ -52,7 +54,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
         }));
       }
     } else {
-      setUser((prev) => ({ ...prev, [name]: value }));
+      setUser((prev: UserData) => ({ ...prev, [name]: value }));
     }
   };
 
