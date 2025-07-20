@@ -1,57 +1,51 @@
-// File: pages/posts/index.tsx
-
-import { useState } from "react";
 import PostCard from "@/components/common/PostCard";
 import PostModal from "@/components/common/PostModal";
 import Header from "@/components/layout/Header";
-import { PostProps, PostData } from "@/interfaces";
+import { PostData, PostProps } from "@/interfaces";
+import { useState } from "react";
 
-interface PostsPageProps {
-  posts: PostProps[];
-}
-
-const Posts: React.FC<PostsPageProps> = ({ posts }) => {
-  const [allPosts, setAllPosts] = useState<PostProps[]>(posts);
-  const [showModal, setShowModal] = useState<boolean>(false);
+const Posts: React.FC<PostProps> = ({ posts }) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [post, setPost] = useState<PostData | null>(null);
 
   const handleAddPost = (newPost: PostData) => {
-    const id = allPosts.length + 1;
-    setAllPosts([{ ...newPost, id }, ...allPosts]);
+    setPost({ ...newPost, id: posts.length + 1 });
   };
 
   return (
     <div className="flex flex-col h-screen">
       <Header />
+
       <main className="p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-semibold">Post Content</h1>
+        <div className="flex justify-between">
+          <h1 className=" text-2xl font-semibold">Post Content</h1>
           <button
-            className="bg-blue-700 px-4 py-2 rounded-full text-white hover:bg-blue-800 transition"
-            onClick={() => setShowModal(true)}
+            onClick={() => setModalOpen(true)}
+            className="bg-blue-700 px-4 py-2 rounded-full text-white"
           >
             Add Post
           </button>
         </div>
 
-        {showModal && (
-          <PostModal
-            onClose={() => setShowModal(false)}
-            onSubmit={handleAddPost}
-          />
-        )}
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {allPosts.map(({ title, body, userId, id }) => (
+        <div className="grid grid-cols-3 gap-2 ">
+          {posts?.map(({ title, body, userId, id }: PostData, key: number) => (
             <PostCard
-              key={id}
               title={title}
               body={body}
               userId={userId}
-              id={id}
+              id={id ?? 0}
+              key={key}
             />
           ))}
         </div>
       </main>
+
+      {isModalOpen && (
+        <PostModal
+          onClose={() => setModalOpen(false)}
+          onSubmit={handleAddPost}
+        />
+      )}
     </div>
   );
 };

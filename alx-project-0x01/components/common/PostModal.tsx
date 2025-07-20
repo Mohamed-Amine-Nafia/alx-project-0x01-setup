@@ -42,7 +42,6 @@ const PostModal: React.FC<PostModalProps> = ({ onClose, onSubmit }) => {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
           <div className="mb-4">
             <label
               htmlFor="title"
@@ -60,7 +59,6 @@ const PostModal: React.FC<PostModalProps> = ({ onClose, onSubmit }) => {
               placeholder="Enter post title"
             />
           </div>
-
           <div className="mb-4">
             <label
               htmlFor="body"
@@ -78,7 +76,6 @@ const PostModal: React.FC<PostModalProps> = ({ onClose, onSubmit }) => {
               placeholder="Enter post content"
             />
           </div>
-
           <div className="flex justify-between items-center">
             <button
               type="button"
